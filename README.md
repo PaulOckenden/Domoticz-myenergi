@@ -1,5 +1,5 @@
 # Domoticz-myenergi
-Domoticz plugin to get myenergi information
+Domoticz plugin to get myenergi information, a slight edit to mvdklip/Domoticz-myenergi
 
 Tested with Python version 3.8, Domoticz versions 2020.2 and 2021.1
 
