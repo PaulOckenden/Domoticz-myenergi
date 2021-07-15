@@ -73,6 +73,10 @@ class BasePlugin:
             Domoticz.Device(Name="Home Consumption", Unit=4, TypeName='kWh', Options={'EnergyMeterMode':'1'}).Create()
         if len(Devices) < 5:
             Domoticz.Device(Name="Grid Export", Unit=5, TypeName='kWh', Options={'EnergyMeterMode':'1'}).Create()
+        if len(Devices) < 6:
+            Domoticz.Device(Name="Eddi Heating", Unit=6, TypeName='kWh', Options={'EnergyMeterMode':'1'}).Create()
+        if len(Devices) < 7:
+            Domoticz.Device(Name="Eddi Temp", Unit=7, Type=80, Subtype=5).Create()
 
         DumpConfigToLog()
 
@@ -127,12 +131,18 @@ class BasePlugin:
                     zappi_grd_watt = 0                              # Grid (W)
                     zappi_div_watt = 0                              # Car Charging (W)
                     zappi_hom_watt = 0                              # Home Consumption (W)
+                    eddi_htg_watt = 0
+                    eddi_temp = 0
 
                     for data in j:
 
                         # Eddi
                         if 'eddi' in data:
-                            pass                                    # TODO
+                            for device in data['eddi']:
+                                if 'div' in device:
+                                    eddi_htg_watt += device['div']
+                                if 'tp1' in device:
+                                    eddi_temp += device['tp1']
 
                         # Zappi
                         if 'zappi' in data:
@@ -152,6 +162,10 @@ class BasePlugin:
                     Devices[1].Update(nValue=0, sValue=str(zappi_gen_watt)+";0")
                     Devices[3].Update(nValue=0, sValue=str(zappi_div_watt)+";0")
                     Devices[4].Update(nValue=0, sValue=str(zappi_hom_watt)+";0")
+
+                    Devices[6].Update(nValue=0, sValue=str(eddi_htg_watt)+";0")
+                    Devices[7].Update(nValue=0, sValue=str(eddi_temp)+";0")
+
 
                     # Work around negative kWh Domoticz issue #4736 using separate import and export grid meters
                     if (zappi_grd_watt < 0):
