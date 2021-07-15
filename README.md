@@ -30,7 +30,7 @@ This plugin:
 - Shows kWh readings computed by Domoticz which will be mostly correct. To get better readings myenergi would need to provide total kWh counters in their API. AFAIK they only provide per minute and per hour counters.
 - Doesn't distinguish individual devices; figures for multiple Zappi's are added up.
 - Connects to the myenergi backend and thus needs a working internet connection.
-- Only takes Zappi devices into account for now; Eddi devices are ignored.
+- Only has very basic support for Eddi - one heater, and one tank temperature reported via the optional relay board.
 
 ## Updating
 
